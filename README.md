@@ -32,10 +32,16 @@ The `demo.py` script supports `2d` and `3d` mode. You can specify the mode and t
 
 `python demo.py --mode 3d --obj knife --data_dir data/ --threshold 0.2`
 
-## Running the Demo
+## Citation
 
 In case you find our work useful, consider citing:
+```bibtex
+@inproceedings{Li2024ShapeGraspZT,
+    title={ShapeGrasp: Zero-Shot Task-Oriented Grasping with Large Language Models through Geometric Decomposition},
+    author={Samuel Li and Sarthak Bhagat and Joseph Campbell and Yaqi Xie and Woojun Kim and Katia P. Sycara and Simon Stepputtis},
+    year={2024},
+}
 
-
+## License
 
 
