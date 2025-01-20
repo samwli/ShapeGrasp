@@ -22,7 +22,7 @@ def load_confidence(base_path):
         confidence_map = cv2.imread(base_path + '.png')
         confidence_map = np.array(confidence_map)
     else:
-        raise ValueError("File not found or unsupported file format (npy or png)")
+        return None
     
     if len(confidence_map.shape) > 2: 
         confidence_map = confidence_map[:,:,0]

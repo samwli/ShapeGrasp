@@ -29,14 +29,17 @@ def run_pipeline(obj, task_string, data_dir, iter, output_idx, mode, threshold, 
     obj_data_path = os.path.join(data_dir, obj)
     output_dir = create_output_directory(obj, output_idx, mode, no_object, model)
     binary_mask = load_mask(obj_data_path+'_mask')
+    
     confidence_map = load_confidence(obj_data_path+'_confidence')
-    points_value_255 = np.sum((confidence_map > 200) & (binary_mask == 1))
-    total_mask_area = np.sum(binary_mask == 1)
-    uncertainty = points_value_255 / total_mask_area if total_mask_area > 0 else 0
-    print(f"uncertainty: {np.round(uncertainty, 2)}")
-    if mode == '3d' and uncertainty > 0.15:
-        print("use 2d")
-        # mode = '2d'
+    if confidence_map is not None:
+        points_value_255 = np.sum((confidence_map > 200) & (binary_mask == 1))
+        total_mask_area = np.sum(binary_mask == 1)
+        uncertainty = points_value_255 / total_mask_area if total_mask_area > 0 else 0
+        print(f"uncertainty: {np.round(uncertainty, 2)}")
+        if mode == '3d' and uncertainty > 0.15:
+            print("use 2d")
+            mode = '2d'
+            
     graph_file = f'outputs_final/{obj}{iter}_{mode}_object/{obj}_graph.txt'
     if os.path.isfile(graph_file):
         print(f"load {obj} graph")
@@ -86,7 +89,7 @@ if __name__ == "__main__":
     parser.add_argument('--task', type=str)
     parser.add_argument('--data_dir', type=str, default='data/', help='Directory where object data is located')
     parser.add_argument('-i', '--iter', type=int, help='iter')
-    parser.add_argument('-m', '--mode', type=str, default='3d', help='3d or 2d (use depth or no depth)')
+    parser.add_argument('-m', '--mode', type=str, default='2d', help='3d or 2d (use depth or no depth)')
     parser.add_argument('-t', '--threshold', type=float, help='Threshold value')
     parser.add_argument('--no_object', action='store_true', help='Include to run without object')
     parser.add_argument('--model', type=str, default='gpt4', help='LLM inference model')
