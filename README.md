@@ -29,6 +29,8 @@ The pipeline depends on a single-view RGB image and binary mask, and a depth ima
     - npy or png file, 1 or 3 channels, binary or 0-255
 - `{obj}_rgb.png`
     - npy or png file
+ 
+You will need to provide your own OpenAI API key, to be imported from `code/keys.py`.
   
 ## Running the Demo
 
