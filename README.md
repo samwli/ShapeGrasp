@@ -40,10 +40,12 @@ The `demo.py` script supports `2d` and `3d` mode. You can specify the mode and t
 
 In case you find our work useful, consider citing:
 ```bibtex
-@inproceedings{Li2024ShapeGraspZT,
-    title={ShapeGrasp: Zero-Shot Task-Oriented Grasping with Large Language Models through Geometric Decomposition},
-    author={Samuel Li and Sarthak Bhagat and Joseph Campbell and Yaqi Xie and Woojun Kim and Katia P. Sycara and Simon Stepputtis},
-    year={2024},
+@article{Li2024ShapeGraspZT,
+  title={ShapeGrasp: Zero-Shot Task-Oriented Grasping with Large Language Models through Geometric Decomposition},
+  author={Samuel Li and Sarthak Bhagat and Joseph Campbell and Yaqi Xie and Woojun Kim and Katia P. Sycara and Simon Stepputtis},
+  journal={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year={2024},
+  pages={10527-10534},
 }
 ```
 
