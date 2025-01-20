@@ -1,4 +1,4 @@
-# Symbolic Language Representation for Zero-Shot Manipulation
+# Zero-Shot Object Manipulation with LLMs through Geometric Decomposition
 
 This project involves symbolic geometric decomposition for LLM scene understanding, particularly in the domain of grasping.
 
