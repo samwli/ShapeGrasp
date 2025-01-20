@@ -23,7 +23,7 @@ pip install openai==0.27.9
 
 The pipeline depends on a single-view RGB image and binary mask, and a depth image for 3D mode. These files should be named as follows and placed in your specified `data_dir`:
 
-- `{obj}_depth` (not needed in 2D mode)
+- `{obj}_depth.png` (not needed in 2D mode)
     - npy or png file, 1 or 3 channels
 - `{obj}_mask.npy`
     - npy or png file, 1 or 3 channels, binary or 0-255
