@@ -1,6 +1,6 @@
-# Zero-Shot Object Manipulation with LLMs through Geometric Decomposition
+# ShapeGrasp: Zero-Shot Object Manipulation with LLMs through Geometric Decomposition
 
-This project involves symbolic geometric decomposition for LLM scene understanding, particularly in the domain of grasping.
+[arXiv](https://arxiv.org/abs/2403.18062) | [Project Page]([https://arxiv.org/abs/2403.18062](https://shapegrasp.github.io/))
 
 ## Installation
 
