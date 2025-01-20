@@ -41,7 +41,10 @@ In case you find our work useful, consider citing:
     author={Samuel Li and Sarthak Bhagat and Joseph Campbell and Yaqi Xie and Woojun Kim and Katia P. Sycara and Simon Stepputtis},
     year={2024},
 }
+```
 
 ## License
+
+See LICENSE for details.
 
 
