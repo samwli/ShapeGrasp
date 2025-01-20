@@ -1,0 +1,5 @@
+Nodes of the graph:
+[('rect0', {'shape': 'rectangle', 'centroid': (706, 212), 'area': '76 cm^2', 'aspect_ratio': 2.777, 'width': '6 cm', 'angle': 171, 'color': 'Gray'}), ('rect1', {'shape': 'rectangle', 'centroid': (421, 228), 'area': '36 cm^2', 'aspect_ratio': 5.218, 'width': '2 cm', 'angle': 171, 'color': 'Brown'})]
+
+Edges of the graph:
+[('rect0', 'rect1', {'length': 1})]

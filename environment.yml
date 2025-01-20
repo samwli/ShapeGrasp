@@ -1,0 +1,8 @@
+name: llm_grasp
+channels:
+  - defaults
+dependencies:
+  - python=3.9
+  - anaconda::scipy
+  - anaconda::scikit-image
+
