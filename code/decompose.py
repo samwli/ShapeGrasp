@@ -69,5 +69,3 @@ def decompose(mesh, output_dir, mode, data_dir, threshold = 0.08,):
     draw_hulls(rgb_image, hulls, output_dir, obj)
     
     return hulls
-    
-# decompose('outputs/headphones_3d_20231224_194646', 'data/headphones', 'headphones', '3d', 0.2)
