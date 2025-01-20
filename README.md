@@ -1,6 +1,6 @@
 # ShapeGrasp: Zero-Shot Object Manipulation with LLMs through Geometric Decomposition
 
-[arXiv](https://arxiv.org/abs/2403.18062) | [Project Page](https://shapegrasp.github.io/)
+[Project page](https://shapegrasp.github.io/) | [ShapeGrasp arXiv](https://arxiv.org/abs/2403.18062)
 
 ## Installation
 
