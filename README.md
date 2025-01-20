@@ -30,7 +30,7 @@ The pipeline depends on a single-view RGB image and binary mask, and a depth ima
 
 The `demo.py` script supports `2d` and `3d` mode. You can specify the mode and the object to process using command-line arguments. You can also specify an optional decomposition threshold. Example:
 
-`python demo.py --mode 3d --obj knife --data_dir data/ --threshold 0.2`
+`python demo.py --mode 2d --obj knife --data_dir data/ --threshold 0.2`
 
 ## Citation
 
@@ -45,6 +45,6 @@ In case you find our work useful, consider citing:
 
 ## License
 
-See LICENSE for details.
+This project is licensed under the terms of the [MIT License](LICENSE).
 
 
