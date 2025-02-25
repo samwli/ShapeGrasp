@@ -21,7 +21,7 @@ def create_output_directory(obj, output_idx, mode, no_object, model):
         os.makedirs(output_dir)
     return output_dir
 
-def run_pipeline(obj, task_string, data_dir, iter, output_idx, mode, threshold, no_object, model):
+def run_pipeline(obj, task_string, data_dir, iter, output_idx, mode, threshold, no_object, model, eps):
     variant = f"Running {obj} in mode {mode} task {output_idx} using {model}"
     if no_object:
         variant += " no_object"
@@ -62,9 +62,9 @@ def run_pipeline(obj, task_string, data_dir, iter, output_idx, mode, threshold, 
     
             if mode == '3d' and len(hulls) > 8:
                 print("too many hulls, switching to 2d")
-                # mode = '2d'
-                # threshold = 0.15
-                # hulls = decompose(mesh, output_dir, mode, data_dir, threshold)
+                mode = '2d'
+                threshold = 0.15
+                hulls = decompose(mesh, output_dir, mode, data_dir, threshold)
             num_hulls = 0
             for hull in hulls:
                 if hull.volume >= 500:
@@ -78,10 +78,11 @@ def run_pipeline(obj, task_string, data_dir, iter, output_idx, mode, threshold, 
                     if hull.volume >= 500:
                         num_hulls += 1
             print(f"num parts: {len(hulls)}")
-        graph, shapes = create_graph(hulls, output_dir, obj_data_path, mode)
+        graph, shapes = create_graph(hulls, output_dir, obj_data_path, mode, eps)
+        
     grasp_point, img, most_likely_index = run_llm(graph, shapes, output_dir, obj_data_path, mode, no_object, task_string, model)
     return grasp_point, img, most_likely_index
-    # TODO: grasp at this point
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run the 3D mesh pipeline')
@@ -92,7 +93,15 @@ if __name__ == "__main__":
     parser.add_argument('-m', '--mode', type=str, default='2d', help='3d or 2d (use depth or no depth)')
     parser.add_argument('-t', '--threshold', type=float, help='Threshold value')
     parser.add_argument('--no_object', action='store_true', help='Include to run without object')
-    parser.add_argument('--model', type=str, default='gpt4', help='LLM inference model')
+    parser.add_argument('--model', type=str, default='gpt4o', help='LLM inference model')
+    parser.add_argument('--eps', type=float, default=0.015, help='epsilon for shape approximation')
     args = parser.parse_args()
-    run_pipeline(obj=args.obj, task_string=args.task, output_idx=1, data_dir=args.data_dir, iter=args.iter, mode=args.mode, threshold=args.threshold, no_object=args.no_object, model=args.model)
-    
+    try:
+        run_pipeline(obj=args.obj, task_string=args.task, output_idx=1, data_dir=args.data_dir, iter=args.iter, mode=args.mode, threshold=args.threshold, no_object=args.no_object, model=args.model, eps=args.eps)
+    except Exception as e:
+        # there was an error in 3d mode use 2d
+        print(f"error: {e}")
+        if args.mode == '3d':
+            run_pipeline(obj=args.obj, task_string=args.task, output_idx=1, data_dir=args.data_dir, iter=args.iter, mode='2d', threshold=args.threshold, no_object=args.no_object, model=args.model, eps=args.eps)
+        else:
+            print("error in 2d mode")

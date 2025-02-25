@@ -14,11 +14,13 @@ Create the conda environment:
 Install dependencies:
 
 ```
-conda install -c conda-forge trimesh
-conda install -c conda-forge opencv
 pip install coacd
-pip install openai==0.27.9
+pip install openai==1.12.0
+pip install httpx==0.26.0
 ```
+
+You wil also need to install `TypeScript` via `npm`.
+
 ## Getting Started
 
 The pipeline depends on a single-view RGB image and binary mask, and a depth image for 3D mode. These files should be named as follows and placed in your specified `data_dir`:

@@ -96,12 +96,12 @@ def is_close_to_circle(hull, threshold):
     circularity = circularity_ratio(hull)
     return circularity > threshold
 
-def approximate_shape(hull, convex_hull):
+def approximate_shape(hull, eps):
     if is_close_to_circle(hull, 0.9):
         (x, y), radius = cv2.minEnclosingCircle(hull)
         return "circle", ((x, y), radius)
     
-    epsilon = 0.015 * cv2.arcLength(hull, True)
+    epsilon = eps * cv2.arcLength(hull, True)
     approx = cv2.approxPolyDP(hull, epsilon, True)
     if len(approx) == 1:
         return "circle", (approx.squeeze(), 1)
@@ -116,7 +116,7 @@ def approximate_shape(hull, convex_hull):
         ellipse = cv2.fitEllipse(hull)
         return "ellipse", ellipse
 
-def draw_shapes_on_image(img, hulls, output_dir, object_name):
+def draw_shapes_on_image(img, hulls, output_dir, object_name, eps):
     if len(img.shape) == 2 or img.shape[2] == 1:
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
@@ -124,11 +124,11 @@ def draw_shapes_on_image(img, hulls, output_dir, object_name):
         hull_vs = np.array(hull.points[hull.vertices]).astype(np.int32)
         if hull.volume < 500:
             continue
-        epsilon = 0.015 * cv2.arcLength(hull_vs, True)
+        epsilon = eps * cv2.arcLength(hull_vs, True)
         approx = cv2.approxPolyDP(hull_vs, epsilon, True)
         if len(approx) < 3:
             continue
-        shape, approx = approximate_shape(hull_vs, hull)
+        shape, approx = approximate_shape(hull_vs, eps)
         if shape == "circle":
             center, radius = approx
             center = tuple(map(int, center))
@@ -264,7 +264,7 @@ def create_custom_ellipse(points):
     return (center, axis_length, angle)
 
 
-def create_graph(hulls, output_dir, obj_data_path, mode):
+def create_graph(hulls, output_dir, obj_data_path, mode, eps):
     # with open(os.path.join(output_dir, f'{object_name}_2d_hulls.pkl'), 'rb') as f:
     #     hulls = pickle.load(f)
     object_name = output_dir.split('/')[1].split('_'+mode)[0][:-1]
@@ -288,11 +288,11 @@ def create_graph(hulls, output_dir, obj_data_path, mode):
         if hull.volume < 500:
             continue
         hull_vs = np.array(hull.points[hull.vertices]).astype(np.int32)
-        epsilon = 0.015 * cv2.arcLength(hull_vs, True)
+        epsilon = eps * cv2.arcLength(hull_vs, True)
         approx = cv2.approxPolyDP(hull_vs, epsilon, True)
         if len(approx) < 3:
             continue
-        shape, obj = approximate_shape(hull_vs, hull)
+        shape, obj = approximate_shape(hull_vs, eps)
         hull_points = hull.points[hull.vertices]
         cx, cy = centroidPoly(hull_points)
         area = str(int(hull.volume / 400)) + ' cm^2'
@@ -332,7 +332,7 @@ def create_graph(hulls, output_dir, obj_data_path, mode):
         if hulls[i].volume < 500:
             continue
         hull_vs = np.array(hulls[i].points[hulls[i].vertices]).astype(np.int32)
-        epsilon = 0.015 * cv2.arcLength(hull_vs, True)
+        epsilon = eps * cv2.arcLength(hull_vs, True)
         approx = cv2.approxPolyDP(hull_vs, epsilon, True)
         if len(approx) < 3:
             continue
@@ -340,7 +340,7 @@ def create_graph(hulls, output_dir, obj_data_path, mode):
             if hulls[j].volume < 500:
                 continue
             hull_vs = np.array(hulls[j].points[hulls[j].vertices]).astype(np.int32)
-            epsilon = 0.015 * cv2.arcLength(hull_vs, True)
+            epsilon = eps * cv2.arcLength(hull_vs, True)
             approx = cv2.approxPolyDP(hull_vs, epsilon, True)
             if len(approx) < 3:
                 continue
@@ -351,7 +351,7 @@ def create_graph(hulls, output_dir, obj_data_path, mode):
                 # e1, e2 = int(end_vertex[0]), int(end_vertex[1])
                 G.add_edge(find_node_name(node_names, i), find_node_name(node_names, j), length=int(length)) #, start_vertex=(s1, s2), end_vertex=(e1, e2))
                 
-    shapes = draw_shapes_on_image(cv2.cvtColor(rgb_img, cv2.COLOR_RGB2BGR), hulls, output_dir, object_name)
+    shapes = draw_shapes_on_image(cv2.cvtColor(rgb_img, cv2.COLOR_RGB2BGR), hulls, output_dir, object_name, eps)
     with open(output_dir + f'/{object_name}_graph.txt', 'w') as file:
         nodes = G.nodes(data=True)
         edges = G.edges(data=True)
