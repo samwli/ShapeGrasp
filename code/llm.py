@@ -74,13 +74,13 @@ def parse_graph_nodes(graph_text):
     node_data = {node[0]: (node[1]['angle'],) + node[1]['centroid'] for node in nodes}
     return node_data
 
-def run_llm(graph, img, output_dir, obj_data_path, mode, no_object, task_string, model='gpt4'):
+def run_llm(graph, img, output_dir, obj_data_path, mode, no_object, task_string, model='gpt4o'):
     ts = TypeChat()
     # Set up the language model that you want to use
     # Note: If you are utilizing local LLMs (e.g. through FastChat), you can set base_url to the URL of your local LLM
     # Note: You can enable json_mode if you want, however, only gpt-4-1106-preview supports this
-    if model == 'gpt4':
-        ts.createLanguageModel(model="gpt-4-0125-preview", api_key=API_KEY, org_key=API_ORG, use_json_mode=True)
+    if model == 'gpt4o':
+        ts.createLanguageModel(model="gpt-4o", api_key=API_KEY, org_key=API_ORG, use_json_mode=True)
     else:
         ts.createLanguageModel(model="Starling-LM-7B-alpha", api_key=API_KEY, org_key=API_ORG, base_url="http://localhost:23002/v1")
     obj = output_dir.split('/')[1].split('_'+mode)[0][:-1]
