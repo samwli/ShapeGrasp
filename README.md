@@ -23,7 +23,7 @@ You wil also need to install `TypeScript` via `npm`.
 
 ## Getting Started
 
-The pipeline depends on a single-view RGB image and binary mask, and a depth image for 3D mode. These files should be named as follows and placed in your specified `data_dir`:
+The pipeline depends on a single-view RGB image and binary mask, and a depth image for 3D mode, to decompose and select a task-oriented grasping part. These files should be named as follows and placed in your specified `data_dir`:
 
 - `{obj}_depth.png` (not needed in 2D mode)
     - npy or png file, 1 or 3 channels
@@ -36,9 +36,11 @@ You will need to provide your own OpenAI API key, to be imported from `code/keys
   
 ## Running the Demo
 
-The `demo.py` script supports `2d` and `3d` mode. You can specify the mode and the object to process using command-line arguments. You can also specify an optional decomposition threshold. Example:
+The `demo.py` script supports `2d` and `3d` mode. You can specify the mode and the object to process using command-line arguments. You can also specify a convex decomposition error threshold, and an epsilon for shape approximation (contour approximation). Example:
 
-`python demo.py --mode 2d --obj knife --data_dir data/ --threshold 0.2`
+`python demo.py --mode 2d --obj knife --data_dir data/ --threshold 0.2 --eps 0.02`
+
+Intermediate geometric and semantic reasoning outputs are also provided. 
 
 ## Citation
 
